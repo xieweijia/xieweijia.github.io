@@ -1,0 +1,1097 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>R apply家族函数 | 生物信息菜鸟 | 维佳</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="WeiJia">
+    
+
+    
+    <meta name="description" content="apply家族函数刚开始接触R语言时，会听到各种的R语言使用技巧，其中最重要的一条就是不要用循环，效率特别低，要用向量计算代替循环计算。
+那么，这是为什么呢？原因在于R的循环操作for和while，都是基于R语言本身来实现的，而向量操作是基于底层的C语言函数实现的，从性能上来看，就会有比较明显的差距了。那么如何使用C的函数来实现向量计算呢，就是要用到apply的家族函数，包括apply, sapp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R apply家族函数">
+<meta property="og:url" content="http://xieweijia.com/2016/11/05/apply/index.html">
+<meta property="og:site_name" content="生物信息菜鸟 | 维佳">
+<meta property="og:description" content="apply家族函数刚开始接触R语言时，会听到各种的R语言使用技巧，其中最重要的一条就是不要用循环，效率特别低，要用向量计算代替循环计算。
+那么，这是为什么呢？原因在于R的循环操作for和while，都是基于R语言本身来实现的，而向量操作是基于底层的C语言函数实现的，从性能上来看，就会有比较明显的差距了。那么如何使用C的函数来实现向量计算呢，就是要用到apply的家族函数，包括apply, sapp">
+<meta property="og:updated_time" content="2016-11-05T07:49:47.271Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="R apply家族函数">
+<meta name="twitter:description" content="apply家族函数刚开始接触R语言时，会听到各种的R语言使用技巧，其中最重要的一条就是不要用循环，效率特别低，要用向量计算代替循环计算。
+那么，这是为什么呢？原因在于R的循环操作for和while，都是基于R语言本身来实现的，而向量操作是基于底层的C语言函数实现的，从性能上来看，就会有比较明显的差距了。那么如何使用C的函数来实现向量计算呢，就是要用到apply的家族函数，包括apply, sapp">
+
+    
+    <link rel="alternative" href="/atom.xml" title="生物信息菜鸟 | 维佳" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon1.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo2.png" alt="生物信息菜鸟 | 维佳" title="生物信息菜鸟 | 维佳"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="生物信息菜鸟 | 维佳">生物信息菜鸟 | 维佳</a></h1>
+				<h2 class="blog-motto">需要学习的东西太多，时间，时间！</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+						<li><a href="/share">share</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:xieweijia.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/05/apply/" title="R apply家族函数" itemprop="url">R apply家族函数</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="WeiJia" target="_blank" itemprop="author">WeiJia</a>
+		
+  <p class="article-time">
+    <time datetime="2016-11-05T07:49:45.138Z" itemprop="datePublished"> 发表于 2016-11-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#apply家族函数"><span class="toc-number">1.</span> <span class="toc-text">apply家族函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-apply函数"><span class="toc-number">2.</span> <span class="toc-text">1. apply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-lapply函数"><span class="toc-number">3.</span> <span class="toc-text">2. lapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-sapply函数"><span class="toc-number">4.</span> <span class="toc-text">3. sapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-vapply函数"><span class="toc-number">5.</span> <span class="toc-text">4. vapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-mapply函数"><span class="toc-number">6.</span> <span class="toc-text">5. mapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-tapply函数"><span class="toc-number">7.</span> <span class="toc-text">6. tapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-rapply函数"><span class="toc-number">8.</span> <span class="toc-text">7. rapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-eapply函数"><span class="toc-number">9.</span> <span class="toc-text">8. eapply函数</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="apply家族函数"><a href="#apply家族函数" class="headerlink" title="apply家族函数"></a>apply家族函数</h2><p>刚开始接触R语言时，会听到各种的R语言使用技巧，其中最重要的一条就是不要用循环，效率特别低，要用向量计算代替循环计算。</p>
+<p>那么，这是为什么呢？原因在于R的循环操作for和while，都是基于R语言本身来实现的，而向量操作是基于底层的C语言函数实现的，从性能上来看，就会有比较明显的差距了。那么如何使用C的函数来实现向量计算呢，就是要用到apply的家族函数，包括apply, sapply, tapply, mapply, lapply, rapply, vapply, eapply等。</p>
+<p>apply函数族是R语言中数据处理的一组核心函数，通过使用apply函数，我们可以实现对数据的循环、分组、过滤、类型控制等操作。但是，<strong>由于在R语言中apply函数与其他语言循环体的处理思路是完全不一样的</strong>，所以apply函数族一直是使用者玩不转一类核心函数，所以要开始<strong>转换思维方式</strong>了，不能那么固执啊。</p>
+<p>很多R语言新手，写了很多的for循环代码，也不愿意多花点时间把apply函数的使用方法了解清楚，<strong>想想这是非常得不偿失的，for循环浪费的那些时间，零头都够好好研究这些函数了</strong>。</p>
+<p>apply函数本身就是解决数据循环处理的问题，为了面向不同的数据类型，不同的返回值，apply函数组成了一个函数族，包括了8个功能类似的函数。这其中有些函数很相似，有些也不是太一样的。</p>
+<h2 id="1-apply函数"><a href="#1-apply函数" class="headerlink" title="1. apply函数"></a>1. apply函数</h2><p>apply函数是最常用的代替for循环的函数。apply函数可以对矩阵、数据框、数组(二维、多维)，按行或列进行循环计算，对子元素进行迭代，并把子元素以参数传递的形式给自定义的FUN函数中，并以返回计算结果。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>apply(X, MARGIN, FUN, …)<br>参数列表：</p>
+<ol>
+<li>X：数组、矩阵、数据框</li>
+<li>MARGIN: 按行计算或按按列计算，1表示按行，2表示按列</li>
+<li>FUN: 自定义的调用函数,需要写函数的能力啊</li>
+<li>…： 更多参数，可选</li>
+</ol>
+</blockquote>
+<p>举个栗子，对一个矩阵的每一行求和，下面就要用到apply做循环了。</p>
+<pre><code>&gt; x&lt;-matrix(1:12,ncol=3)
+&gt; x
+     [,1] [,2] [,3]
+[1,]    1    5    9
+[2,]    2    6   10
+[3,]    3    7   11
+[4,]    4    8   12
+&gt; apply(x,1,sum)
+[1] 15 18 21 24
+</code></pre><p>下面计算一个稍微复杂点的例子，按行循环，让数据框的x1列加1，并计算出x1,x2列的均值。</p>
+<pre><code>&gt; x &lt;- cbind(x1 = 3, x2 = c(4:1, 2:5))
+&gt; x
+     x1 x2
+[1,]  3  4
+[2,]  3  3
+[3,]  3  2
+[4,]  3  1
+[5,]  3  2
+[6,]  3  3
+[7,]  3  4
+[8,]  3  5
+# 自定义函数myFUN，第一个参数x为数据
+# 第二、三个参数为自定义参数，可以通过apply的&apos;...&apos;进行传入。
+&gt; myFUN&lt;- function(x, c1, c2) {
+    c(sum(x[c1],1), mean(x[c2])) 
+  }
+# 把数据框按行做循环，每行分别传递给myFUN函数，设置c1,c2对应myFUN的第二、三个参数
+&gt; apply(x,1,myFUN,c1=&apos;x1&apos;,c2=c(&apos;x1&apos;,&apos;x2&apos;))
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]  4.0    4  4.0    4  4.0    4  4.0    4
+[2,]  3.5    3  2.5    2  2.5    3  3.5    4
+</code></pre><p>通过这个上面的自定义函数myFUN就实现了，一个常用的循环计算。</p>
+<p>如果直接用for循环来实现，那么代码如下：</p>
+<pre><code># 定义一个结果的数据框
+&gt; df&lt;-data.frame()
+
+# 定义for循环
+&gt; for(i in 1:nrow(x)){
+    row&lt;-x[i,]                                         # 每行的值
+    df&lt;-rbind(df,rbind(c(sum(row[1],1), mean(row))))   # 计算，并赋值到结果数据框
+  }
+
+# 打印结果数据框
+&gt; df
+  V1  V2
+1  4 3.5
+2  4 3.0
+3  4 2.5
+4  4 2.0
+5  4 2.5
+6  4 3.0
+7  4 3.5
+8  4 4.0  
+</code></pre><p>通过for循环的方式，也可以很容易的实现上面计算过程，但是这里还有一些额外的操作需要自己处理，比如构建循环体、定义结果数据集、并合每次循环的结果到结果数据集。</p>
+<p>对于上面的需求，还有第三种实现方法，那就是完成利用了R的特性，通过向量化计算来完成的。</p>
+<pre><code>&gt; data.frame(x1=x[,1]+1,x2=rowMeans(x))
+    x1  x2
+1  4 3.5
+2  4 3.0
+3  4 2.5
+4  4 2.0
+5  4 2.5
+6  4 3.0
+7  4 3.5
+8  4 4.0
+</code></pre><p>那么，一行就可以完成整个计算过程了。</p>
+<p>接下来，我们需要再比较一下3种操作上面性能上的消耗。</p>
+<pre><code>&gt; # 清空环境变量
+&gt;  rm(list=ls())
+&gt; # 封装fun1
+&gt; fun1&lt;-function(x){
+    myFUN&lt;- function(x, c1, c2){
+      c(sum(x[c1],1), mean(x[c2]))
+    }
+    apply(x,1,myFUN,c1=&apos;x1&apos;,c2=c(&apos;x1&apos;,&apos;x2&apos;))
+  }
+&gt; # 封装fun2
+&gt; fun2&lt;-function(x){
+    df&lt;-data.frame()
+    for(i in 1:nrow(x)){
+      row&lt;-x[i,]
+      df&lt;-rbind(df,rbind(c(sum(row[1],1), mean(row))))
+    }
+  }
+&gt; # 封装fun3
+&gt; fun3&lt;-function(x){
++   data.frame(x1=x[,1]+1,x2=rowMeans(x))
++ }
+&gt; # 生成数据集
+&gt; x &lt;- cbind(x1=3, x2 = c(4000:1, 2:5000))
+&gt; # 分别统计3种方法的CPU耗时。
+&gt; system.time(fun1(x))
+用户 系统 流逝 
+0.08 0.00 0.08 
+&gt; system.time(fun2(x))
+用户 系统 流逝 
+3.93 0.01 3.39 
+&gt; system.time(fun3(x))
+用户 系统 流逝 
+0    0    0 
+</code></pre><p>从CPU的耗时来看，用for循环实现的计算是耗时最长的，apply实现的循环耗时很短，而直接使用R语言内置的向量计算的操作几乎不耗时。通过上面的测试，对同一个计算来说，优先考虑R语言内置的向量计算，必须要用到循环时则使用apply函数，应该尽量避免显示的使用for,while等操作方法。</p>
+<h2 id="2-lapply函数"><a href="#2-lapply函数" class="headerlink" title="2. lapply函数"></a>2. lapply函数</h2><p>lapply函数是一个最基础循环操作函数之一，用来对list、data.frame数据集进行循环，并返回和X长度同样的list结构作为结果集，通过lapply的开头的第一个字母’l’就可以判断返回结果集的类型。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>lapply(X, FUN, …)</p>
+<p>参数列表：</p>
+<ol>
+<li>X:list、data.frame数据</li>
+<li>FUN: 自定义的调用函数</li>
+<li>…: 更多参数，可选</li>
+</ol>
+</blockquote>
+<p>举个栗子，计算list中的每个KEY对应该的数据的分位数。</p>
+<pre><code>&gt; # 构建一个list数据集x，分别包括a,b,c 三个KEY值。
+&gt; x &lt;- list(a = 1:10, b = rnorm(6,10,5), c = c(TRUE,FALSE,FALSE,TRUE))
+&gt; x
+$a
+ [1]  1  2  3  4  5  6  7  8  9 10
+
+$b
+[1] 14.821168  6.579043 10.525280  5.989225 11.658932  6.997419
+
+$c
+[1]  TRUE FALSE FALSE  TRUE
+&gt; # 分别计算每个KEY对应该的数据的分位数。
+&gt; lapply(x,fivenum)
+$a
+[1]  1.0  3.0  5.5  8.0 10.0
+
+$b
+[1]  5.989225  6.579043  8.761350 11.658932 14.821168
+
+$c
+[1] 0.0 0.0 0.5 1.0 1.0
+</code></pre><p>lapply就可以很方便地把list数据集进行循环操作了，还可以用data.frame数据集按列进行循环，但如果传入的数据集是一个向量或矩阵对象，那么直接使用lapply就不能达到想要的效果了。</p>
+<p>举个栗子，对矩阵的列求和。</p>
+<pre><code>&gt; # 生成一个矩阵
+&gt; x &lt;- cbind(x1=3, x2=c(2:1,4:5))
+&gt; x
+     x1 x2
+[1,]  3  2
+[2,]  3  1
+[3,]  3  4
+[4,]  3  5
+&gt; class(x)
+[1] &quot;matrix&quot;
+&gt; # 求和
+&gt; lapply(x, sum)
+[[1]]
+[1] 3
+
+[[2]]
+[1] 3
+
+[[3]]
+[1] 3
+
+[[4]]
+[1] 3
+
+[[5]]
+[1] 2
+
+[[6]]
+[1] 1
+
+[[7]]
+[1] 4
+
+[[8]]
+[1] 5
+</code></pre><p>lapply会分别循环矩阵中的每个值，而不是按行或按列进行分组计算。</p>
+<p>如果对数据框的列求和：</p>
+<pre><code>&gt; lapply(data.frame(x), sum)
+$x1
+[1] 12
+
+$x2
+[1] 12
+</code></pre><p>lapply会自动把数据框按列进行分组，再进行计算。</p>
+<h2 id="3-sapply函数"><a href="#3-sapply函数" class="headerlink" title="3. sapply函数"></a>3. sapply函数</h2><p>sapply函数是一个简化版的lapply，sapply增加了2个参数simplify和USE.NAMES，主要就是让输出看起来更友好，返回值为向量，而不是list对象。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>sapply(X, FUN, …, simplify=TRUE, USE.NAMES = TRUE)<br>参数列表：</p>
+<ol>
+<li>X:数组、矩阵、数据框</li>
+<li>FUN: 自定义的调用函数</li>
+<li>…: 更多参数，可选</li>
+<li>simplify: 是否数组化，当值array时，输出结果按数组进行分组</li>
+<li>USE.NAMES: 如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</li>
+</ol>
+</blockquote>
+<p>我们还用上面lapply的计算需求进行说明:</p>
+<pre><code>&gt; x &lt;- cbind(x1=3, x2=c(2:1,4:5))
+&gt; x
+     x1 x2
+[1,]  3  2
+[2,]  3  1
+[3,]  3  4
+[4,]  3  5
+&gt; # 对矩阵计算，计算过程同lapply函数
+&gt; sapply(x, sum)
+[1] 3 3 3 3 2 1 4 5
+&gt; # 对数据框计算
+&gt; sapply(data.frame(x), sum)
+x1 x2 
+12 12 
+&gt; # 检查结果类型，sapply返回类型为向量，而lapply的返回类型为list
+&gt; class(lapply(x, sum))
+[1] &quot;list&quot;
+&gt; class(sapply(x, sum))
+[1] &quot;numeric&quot;
+</code></pre><p>如果simplify=FALSE和USE.NAMES=FALSE，那么完全sapply函数就等于lapply函数了。</p>
+<pre><code>&gt; lapply(data.frame(x), sum)
+$x1
+[1] 12
+
+$x2
+[1] 12
+
+&gt; sapply(data.frame(x), sum, simplify=FALSE, USE.NAMES=FALSE)
+$x1
+[1] 12
+
+$x2
+[1] 12
+</code></pre><p>对于simplify为array时，我们可以参考下面的例子，构建一个三维数组，其中二个维度为方阵。</p>
+<pre><code>&gt; a&lt;-1:2
+&gt; # 按数组分组
+&gt; sapply(a,function(x) matrix(x,2,2), simplify=&apos;array&apos;)
+, , 1
+
+     [,1] [,2]
+[1,]    1    1
+[2,]    1    1
+
+, , 2
+
+        [,1] [,2]
+[1,]    2    2
+[2,]    2    2
+
+&gt; # 默认情况，则自动合并分组
+&gt; sapply(a,function(x) matrix(x,2,2))
+     [,1] [,2]
+[1,]    1    2
+[2,]    1    2
+[3,]    1    2
+[4,]    1    2
+</code></pre><p>对于字符串的向量，还可以自动生成数据名。</p>
+<pre><code>&gt; val&lt;-head(letters)
+&gt; # 默认设置数据名
+&gt; sapply(val,paste,USE.NAMES=TRUE)
+  a   b   c   d   e   f 
+&quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; 
+&gt; # USE.NAMES=FALSE，则不设置数据名
+&gt; sapply(val,paste,USE.NAMES=FALSE)
+[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot;
+</code></pre><h2 id="4-vapply函数"><a href="#4-vapply函数" class="headerlink" title="4. vapply函数"></a>4. vapply函数</h2><p>vapply类似于sapply，提供了FUN.VALUE参数，用来控制返回值的行名，这样可以让程序更健壮。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>vapply(X, FUN, FUN.VALUE, …, USE.NAMES = TRUE)<br>参数列表：</p>
+<ol>
+<li>X:数组、矩阵、数据框</li>
+<li>FUN: 自定义的调用函数</li>
+<li>FUN.VALUE: 定义返回值的行名row.names</li>
+<li>…: 更多参数，可选</li>
+<li>USE.NAMES: 如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</li>
+</ol>
+</blockquote>
+<p>举个栗子，对数据框的数据进行累计求和，并对每一行设置行名row.names</p>
+<pre><code>&gt; #生成数据集
+&gt; x &lt;- data.frame(cbind(x1=3, x2=c(2:1,4:5)))
+&gt; x
+  x1 x2
+1  3  2
+2  3  1
+3  3  4
+4  3  5
+&gt; # 设置行名，4行分别为a,b,c,d
+&gt; vapply(x,cumsum,FUN.VALUE=c(&apos;a&apos;=0,&apos;b&apos;=0,&apos;c&apos;=0,&apos;d&apos;=0))
+  x1 x2
+a  3  2
+b  6  3
+c  9  7
+d 12 12
+&gt; # 当不设置时，为默认的索引值
+&gt; a&lt;-sapply(x,cumsum)
+&gt; a
+     x1 x2
+[1,]  3  2
+[2,]  6  3
+[3,]  9  7
+[4,] 12 12
+&gt; # 手动的方式设置行名
+&gt; row.names(a)&lt;-c(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;)
+&gt; a
+  x1 x2
+a  3  2
+b  6  3
+c  9  7
+d 12 12
+</code></pre><p>通过使用vapply可以直接设置返回值的行名，这样子做其实可以节省一行的代码，让代码看起来更顺畅，当然如果不愿意多记一个函数，那么也可以直接忽略它，只用sapply就够了。</p>
+<h2 id="5-mapply函数"><a href="#5-mapply函数" class="headerlink" title="5. mapply函数"></a>5. mapply函数</h2><p>mapply也是sapply的变形函数，类似多变量的sapply，但是参数定义有些变化。第一参数为自定义的FUN函数，第二个参数’…’可以接收多个数据，作为FUN函数的参数调用。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>mapply(FUN, …, MoreArgs = NULL, SIMPLIFY = TRUE,USE.NAMES = TRUE)<br>参数列表：</p>
+<ol>
+<li>FUN: 自定义的调用函数</li>
+<li>…: 接收多个数据</li>
+<li>MoreArgs: 参数列表</li>
+<li>SIMPLIFY: 是否数组化，当值array时，输出结果按数组进行分组</li>
+<li>USE.NAMES: 如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</li>
+</ol>
+</blockquote>
+<p>举个栗子，比较3个向量大小，按索引顺序取较大的值：</p>
+<pre><code>&gt; set.seed(1) #设置种子之后随机数会是一样的
+&gt; # 定义3个向量
+&gt; x&lt;-1:10
+&gt; y&lt;-5:-4
+&gt; z&lt;-round(runif(10,-5,5))
+&gt; # 按索引顺序取较大的值。
+&gt; mapply(max,x,y,z)
+ [1]  5  4  3  4  5  6  7  8  9 10
+</code></pre><p>再看一个例子，生成4个符合正态分布的数据集，分别对应的均值和方差为c(1,10,100,1000)。</p>
+<pre><code>&gt; set.seed(1)
+&gt; # 长度为4
+&gt;  n&lt;-rep(4,4)
+&gt; set.seed(1)
+&gt; # 长度为4
+&gt; n&lt;-rep(4,4)
+&gt; # m为均值，v为方差
+&gt; m&lt;-v&lt;-c(1,10,100,1000)
+&gt; # 生成4组数据，按列分组
+&gt; mapply(rnorm,n,m,v)
+          [,1]      [,2]      [,3]       [,4]
+[1,] 0.3735462 13.295078 157.57814   378.7594
+[2,] 1.1836433  1.795316  69.46116 -1214.6999
+[3,] 0.1643714 14.874291 251.17812  2124.9309
+[4,] 2.5952808 17.383247 138.98432   955.0664
+</code></pre><p>由于mapply是可以接收多个参数的，所以我们在做数据操作的时候，就不需要把数据先合并为data.frame了，直接一次操作就能计算出结果了。</p>
+<h2 id="6-tapply函数"><a href="#6-tapply函数" class="headerlink" title="6. tapply函数"></a>6. tapply函数</h2><p>tapply用于分组的循环计算，通过INDEX参数可以把数据集X进行分组，相当于group by的操作。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>tapply(X, INDEX, FUN = NULL, …, simplify = TRUE)<br>参数列表：</p>
+<ol>
+<li>X: 向量</li>
+<li>INDEX: 用于分组的索引</li>
+<li>FUN: 自定义的调用函数</li>
+<li>…: 接收多个数据</li>
+<li>simplify : 是否数组化，当值array时，输出结果按数组进行分组</li>
+</ol>
+</blockquote>
+<p>举个栗子，计算不同品种的鸢尾花的花瓣(iris)长度的均值。</p>
+<pre><code>&gt; # 通过iris$Species品种进行分组
+&gt; tapply(iris$Petal.Length,iris$Species,mean)
+     setosa versicolor  virginica 
+      1.462      4.260      5.552 
+</code></pre><p>对向量x和y进行计算，并以向量t为索引进行分组，求和。table，factor因子知识。</p>
+<pre><code>&gt; set.seed(1)
+&gt; # 定义x,y向量
+&gt; x&lt;-y&lt;-1:10;x;y
+ [1]  1  2  3  4  5  6  7  8  9 10
+ [1]  1  2  3  4  5  6  7  8  9 10
+&gt; # 设置分组索引t
+&gt; t&lt;-round(runif(10,1,100)%%2);t
+ [1] 1 2 2 1 1 2 1 0 1 1
+&gt; # 对x进行分组求和
+&gt; tapply(x,t,sum)
+ 0  1  2 
+ 8 36 11 
+</code></pre><p>由于tapply只接收一个向量参考，通过’…’可以把再传给你FUN其他的参数，那么我们想去y向量也进行求和，把y作为tapply的第4个参数进行计算。</p>
+<pre><code>&gt; tapply(x,t,sum,y)
+ 0  1  2 
+63 91 66 
+</code></pre><p>得到的结果并不符合我们的预期，结果不是把x和y对应的t分组后求和，而是得到了其他的结果。第4个参数y传入sum时，并不是按照循环一个一个传进去的，而是每次传了完整的向量数据，那么再执行sum时sum(y)=55，所以对于t=0时，x=8 再加上y=55，最后计算结果为63。那么，我们在使用’…’去传入其他的参数的时候，一定要看清楚传递过程的描述，才不会出现的算法上的错误。</p>
+<h2 id="7-rapply函数"><a href="#7-rapply函数" class="headerlink" title="7. rapply函数"></a>7. rapply函数</h2><p>rapply是一个递归版本的lapply，它只处理list类型数据，对list的每个元素进行递归遍历，如果list包括子元素则继续遍历。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>rapply(object, f, classes = “ANY”, deflt = NULL, how = c(“unlist”, “replace”, “list”), …)</p>
+<p>参数列表：</p>
+<ol>
+<li>object:list数据</li>
+<li>f: 自定义的调用函数</li>
+<li>classes : 匹配类型, ANY为所有类型</li>
+<li>deflt: 非匹配类型的默认值</li>
+<li>how: 3种操作方式，当为replace时，则用调用f后的结果替换原list中原来的元素；当为list时，新建一个list，类型匹配调用f函数，不匹配赋值为deflt；当为unlist时，会执行一次unlist(recursive = TRUE)的操作</li>
+<li>…: 更多参数，可选</li>
+</ol>
+</blockquote>
+<p>举个栗子，对一个list的数据进行过滤，把所有数字型numeric的数据进行从小到大的排序。</p>
+<pre><code>&gt; x=list(a=12,b=1:4,c=c(&apos;b&apos;,&apos;a&apos;));x
+$a
+[1] 12
+
+$b
+[1] 1 2 3 4
+
+$c
+[1] &quot;b&quot; &quot;a&quot;
+
+&gt; y=pi
+&gt; z=data.frame(a=rnorm(10),b=1:10)
+&gt; View(z)
+&gt; a &lt;- list(x=x,y=y,z=z)
+&gt; a
+$x
+$x$a
+[1] 12
+
+$x$b
+[1] 1 2 3 4
+
+$x$c
+[1] &quot;b&quot; &quot;a&quot;
+
+
+$y
+[1] 3.141593
+
+$z
+        a  b
+1  -0.8204684  1
+2   0.4874291  2
+3   0.7383247  3
+4   0.5757814  4
+5  -0.3053884  5
+6   1.5117812  6
+7   0.3898432  7
+8  -0.6212406  8
+9  -2.2146999  9
+10  1.1249309 10
+&gt; rapply(a,sort,classes=&apos;numeric&apos;,how=&apos;replace&apos;)
+$x
+$x$a
+[1] 12
+
+$x$b
+[1] 1 2 3 4
+
+$x$c
+[1] &quot;b&quot; &quot;a&quot;
+
+
+$y
+[1] 3.141593
+
+$z
+            a  b
+1  -2.2146999  1
+2  -0.8204684  2
+3  -0.6212406  3
+4  -0.3053884  4
+5   0.3898432  5
+6   0.4874291  6
+7   0.5757814  7
+8   0.7383247  8
+9   1.1249309  9
+10  1.5117812 10
+
+&gt; class(a$z$b)
+[1] &quot;integer&quot;
+</code></pre><p>从结果发现，只有$z$a的数据进行了排序，检查$z$b的类型，发现是integer，是不等于numeric的，所以没有进行排序。</p>
+<p>接下来，对字符串类型的数据进行操作，把所有的字符串型加一个字符串’++++’，非字符串类型数据设置为NA。</p>
+<pre><code>&gt; rapply(a,function(x) paste(x,&apos;++++&apos;),classes=&quot;character&quot;,deflt=NA, how = &quot;list&quot;)
+$x
+$x$a
+[1] NA
+
+$x$b
+[1] NA
+
+$x$c
+[1] &quot;b ++++&quot; &quot;a ++++&quot;
+
+
+$y
+[1] NA
+
+$z
+$z$a
+[1] NA
+
+$z$b
+[1] NA
+</code></pre><p>只有$x$c为字符串向量，都合并了一个新字符串。那么，有了rapply就可以对list类型的数据进行方便的数据过滤了。</p>
+<h2 id="8-eapply函数"><a href="#8-eapply函数" class="headerlink" title="8. eapply函数"></a>8. eapply函数</h2><p>对一个环境空间中的所有变量进行遍历。如果我们有好的习惯，把自定义的变量都按一定的规则存储到自定义的环境空间中，那么这个函数将会让你的操作变得非常方便。</p>
+<p>函数定义：</p>
+<blockquote>
+<p>eapply(env, FUN, …, all.names = FALSE, USE.NAMES = TRUE)<br>参数列表：</p>
+<ol>
+<li>env: 环境空间</li>
+<li>FUN: 自定义的调用函数</li>
+<li>…: 更多参数，可选</li>
+<li>all.names: 匹配类型, ANY为所有类型</li>
+<li>USE.NAMES: 如果X为字符串，TRUE设置字符串为数据名，FALSE不设置</li>
+</ol>
+</blockquote>
+<p>下面我们定义一个环境空间，然后对环境空间的变量进行循环处理。</p>
+<pre><code># 定义一个环境空间
+&gt; env
+# 向这个环境空间中存入3个变量
+&gt; env$a &lt;- 1:10
+&gt; env$beta &lt;- exp(-3:3)
+&gt; env$logic &lt;- c(TRUE, FALSE, FALSE, TRUE)
+&gt; env
+# 查看env空间中的变量
+&gt; ls(env)
+[1] &quot;a&quot;     &quot;beta&quot;  &quot;logic&quot;
+
+# 查看env空间中的变量字符串结构
+&gt; ls.str(env)
+a :  int [1:10] 1 2 3 4 5 6 7 8 9 10
+beta :  num [1:7] 0.0498 0.1353 0.3679 1 2.7183 ...
+logic :  logi [1:4] TRUE FALSE FALSE TRUE
+</code></pre><p>计算env环境空间中所有变量的均值。</p>
+<pre><code>&gt; eapply(env, mean)
+$logic
+[1] 0.5
+$beta
+[1] 4.535125
+$a
+[1] 5.5
+</code></pre><p>再计算中当前环境空间中的所有变量的占用内存大小。</p>
+<pre><code># 查看当前环境空间中的变量
+&gt; ls()
+ [1] &quot;a&quot;     &quot;df&quot;     &quot;env&quot;    &quot;x&quot;     &quot;y&quot;    &quot;z&quot;    &quot;X&quot;  
+
+# 查看所有变量的占用内存大小
+&gt; eapply(environment(), object.size)
+$a
+2056 bytes
+
+$df
+1576 bytes
+
+$x
+656 bytes
+
+$y
+48 bytes
+
+$z
+952 bytes
+
+$X
+1088 bytes
+
+$env
+56 bytes
+</code></pre><p>eapply函数平时很难被用到，但对于R包开发来说，环境空间的使用是必须要掌握的。特别是当R要做为工业化的工具时，对变量的精确控制和管理是非常必要的。</p>
+<p>本文全面地介绍了，R语言中的数据循环处理的apply函数族，基本已经可以应对所有的循环处理的情况了。同时，在apply一节中也比较了，3种数据处理方面的性能，R的内置向量计算，要优于apply循环，大幅优于for循环。那么我们在以后的R的开发和使用过程中，应该更多地把apply函数使用好。</p>
+<p>忘掉程序员的思维，换成数据的思维，也许你就一下子开朗了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/R语言/">R语言</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/apply家族函数/">apply家族函数</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://xieweijia.com/2016/11/05/apply/" data-title="R apply家族函数 | 生物信息菜鸟 | 维佳" data-tsina="6055145068" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/03/四六级/"  title="英语四六级考试">
+ <strong>下一篇：</strong><br/> 
+ <span>英语四六级考试
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2016/11/05/apply/" data-title="R apply家族函数" data-url="http://xieweijia.com/2016/11/05/apply/"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"xieweijia"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#apply家族函数"><span class="toc-number">1.</span> <span class="toc-text">apply家族函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-apply函数"><span class="toc-number">2.</span> <span class="toc-text">1. apply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-lapply函数"><span class="toc-number">3.</span> <span class="toc-text">2. lapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-sapply函数"><span class="toc-number">4.</span> <span class="toc-text">3. sapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-vapply函数"><span class="toc-number">5.</span> <span class="toc-text">4. vapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-mapply函数"><span class="toc-number">6.</span> <span class="toc-text">5. mapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-tapply函数"><span class="toc-number">7.</span> <span class="toc-text">6. tapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-rapply函数"><span class="toc-number">8.</span> <span class="toc-text">7. rapply函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-eapply函数"><span class="toc-number">9.</span> <span class="toc-text">8. eapply函数</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/R语言/" title="R语言">R语言<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/分子生物学/" title="分子生物学">分子生物学<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/生物信息学/" title="生物信息学">生物信息学<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/英语四六级考试/" title="英语四六级考试">英语四六级考试<sup>1</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/apply家族函数/" title="apply家族函数">apply家族函数<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/R语言综述/" title="R语言综述">R语言综述<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ceRNA/" title="ceRNA">ceRNA<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/生物信息综述/" title="生物信息综述">生物信息综述<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/英语四六级考试/" title="英语四六级考试">英语四六级考试<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/分子生物学综述/" title="分子生物学综述">分子生物学综述<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/分子生物学第一章/" title="分子生物学第一章">分子生物学第一章<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.bio-info-trainee.com/" target="_blank" title="让我有了搭建自己博客的想法">生信菜鸟团</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.iwhgao.com/" target="_blank" title="rabbit gao&#39;s blog">rabbit gao&#39;s blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=6055145068&verifier=05ba592a&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 等我赚够了钱，享受了人间的荣华富贵，我就去 <br/>
+			撒哈拉，布达拉，风餐露宿，风雨兼程，流浪，寻找诗和远方</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6055145068" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/weijia-98" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+	</div>
+			
+		
+	    
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="WeiJia">WeiJia</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"xieweijia"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260701433'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/z_stat.php%3Fid%3D1260701433' type='text/javascript'%3E%3C/script%3E"));</script>
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
