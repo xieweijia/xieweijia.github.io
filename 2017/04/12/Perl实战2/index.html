@@ -4,35 +4,53 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>基因测序 | 生物信息菜鸟 | 维佳</title>
+    <title>Perl实战2 | 生物信息菜鸟 | 维佳</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="WeiJia">
     
 
     
-    <meta name="description" content="推荐视频：优酷搜索（陈巍学基因）
-1 测序成本偏离摩尔定律超速下降 在2001年个人基因组测序费用约1亿美元，而到了2014年初，基因测序巨头Illumina公司借助其最新开发的测序平台HiSeq X Ten，成功将人类全基因组测序成本降到1000美元以下，突破了基因测序下游应用的“成本瓶颈”，让基因组测序大规模渗透进入学术研究、药物研发、临床应用成为可能。
-2 数据分析将会是未来的成本约束 将测">
+    <meta name="description" content="Fastq格式详解
+请将input.fastq文件根据序列的一致性进行去冗余合并。合并完后的输出文件格式如下：
+@1_5531992
+TACCTGGTTGATCCTGCCAGTAG
++
+dcdddccdddcddddcddcdcbc
+@2_33067
+ACCTGGTTGATCCTGCCAGTAGG
++
+dddddbbdcbbccb`cbbbbbaa
+其中@行中的1代表索引，5531992代表TAC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基因测序">
-<meta property="og:url" content="http://xieweijia.com/2016/11/27/测序/index.html">
+<meta property="og:title" content="Perl实战2">
+<meta property="og:url" content="http://xieweijia.com/2017/04/12/Perl实战2/index.html">
 <meta property="og:site_name" content="生物信息菜鸟 | 维佳">
-<meta property="og:description" content="推荐视频：优酷搜索（陈巍学基因）
-1 测序成本偏离摩尔定律超速下降 在2001年个人基因组测序费用约1亿美元，而到了2014年初，基因测序巨头Illumina公司借助其最新开发的测序平台HiSeq X Ten，成功将人类全基因组测序成本降到1000美元以下，突破了基因测序下游应用的“成本瓶颈”，让基因组测序大规模渗透进入学术研究、药物研发、临床应用成为可能。
-2 数据分析将会是未来的成本约束 将测">
-<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/836d0f3e-ddb3-4011-a4f2-18b1cc9ceaaa.png">
-<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/a22d4439-7087-4088-902f-7c0d5e36613f.png">
-<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/9b0c98b7-d43e-443f-a263-485d4fd31f69.png">
-<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/56eaae63-f790-4adb-89b1-efd85dfa4f13.png">
-<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/77d6fbba-652b-4f8c-a66f-64d578c9fc03%20%281%29.png">
-<meta property="og:updated_time" content="2016-11-27T13:01:27.506Z">
+<meta property="og:description" content="Fastq格式详解
+请将input.fastq文件根据序列的一致性进行去冗余合并。合并完后的输出文件格式如下：
+@1_5531992
+TACCTGGTTGATCCTGCCAGTAG
++
+dcdddccdddcddddcddcdcbc
+@2_33067
+ACCTGGTTGATCCTGCCAGTAGG
++
+dddddbbdcbbccb`cbbbbbaa
+其中@行中的1代表索引，5531992代表TAC">
+<meta property="og:updated_time" content="2017-04-12T05:59:30.519Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基因测序">
-<meta name="twitter:description" content="推荐视频：优酷搜索（陈巍学基因）
-1 测序成本偏离摩尔定律超速下降 在2001年个人基因组测序费用约1亿美元，而到了2014年初，基因测序巨头Illumina公司借助其最新开发的测序平台HiSeq X Ten，成功将人类全基因组测序成本降到1000美元以下，突破了基因测序下游应用的“成本瓶颈”，让基因组测序大规模渗透进入学术研究、药物研发、临床应用成为可能。
-2 数据分析将会是未来的成本约束 将测">
-<meta name="twitter:image" content="http://ofu5ujfti.bkt.clouddn.com/836d0f3e-ddb3-4011-a4f2-18b1cc9ceaaa.png">
+<meta name="twitter:title" content="Perl实战2">
+<meta name="twitter:description" content="Fastq格式详解
+请将input.fastq文件根据序列的一致性进行去冗余合并。合并完后的输出文件格式如下：
+@1_5531992
+TACCTGGTTGATCCTGCCAGTAG
++
+dcdddccdddcddddcddcdcbc
+@2_33067
+ACCTGGTTGATCCTGCCAGTAGG
++
+dddddbbdcbbccb`cbbbbbaa
+其中@行中的1代表索引，5531992代表TAC">
 
     
     <link rel="alternative" href="/atom.xml" title="生物信息菜鸟 | 维佳" type="application/atom+xml">
@@ -94,14 +112,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/27/测序/" title="基因测序" itemprop="url">基因测序</a>
+      <a href="/2017/04/12/Perl实战2/" title="Perl实战2" itemprop="url">Perl实战2</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="WeiJia" target="_blank" itemprop="author">WeiJia</a>
 		
   <p class="article-time">
-    <time datetime="2016-11-27T13:01:27.391Z" itemprop="datePublished"> 发表于 2016-11-27</time>
+    <time datetime="2017-04-12T05:59:37.213Z" itemprop="datePublished"> 发表于 2017-04-12</time>
     
   </p>
 </header>
@@ -110,17 +128,60 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-测序成本偏离摩尔定律超速下降"><span class="toc-number">1.</span> <span class="toc-text">1 测序成本偏离摩尔定律超速下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据分析将会是未来的成本约束"><span class="toc-number">2.</span> <span class="toc-text">2 数据分析将会是未来的成本约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-基因测序技术的演变历程"><span class="toc-number">3.</span> <span class="toc-text">3 基因测序技术的演变历程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-第二代测序技术优势突出"><span class="toc-number">4.</span> <span class="toc-text">4 第二代测序技术优势突出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃"><span class="toc-number">5.</span> <span class="toc-text">5 生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写在最后"><span class="toc-number">6.</span> <span class="toc-text">写在最后</span></a></li></ol>
+			
 		
 		</div>
 		
-		<p>推荐视频：优酷搜索（陈巍学基因）</p>
-<h3 id="1-测序成本偏离摩尔定律超速下降"><a href="#1-测序成本偏离摩尔定律超速下降" class="headerlink" title="1 测序成本偏离摩尔定律超速下降"></a>1 测序成本偏离摩尔定律超速下降</h3><p> 在2001年个人基因组测序费用约1亿美元，而到了2014年初，基因测序巨头Illumina公司借助其最新开发的测序平台HiSeq X Ten，成功将人类全基因组测序成本降到1000美元以下，突破了基因测序下游应用的“成本瓶颈”，让基因组测序大规模渗透进入学术研究、药物研发、临床应用成为可能。</p>
-<h3 id="2-数据分析将会是未来的成本约束"><a href="#2-数据分析将会是未来的成本约束" class="headerlink" title="2 数据分析将会是未来的成本约束"></a>2 数据分析将会是未来的成本约束</h3><p> 将测序流程拆分来看，下游的数据存储、传输和分析解读这部分成本的下降幅度明显慢于上游文库构建、上机的实验部分，因此未来测序成本下降的瓶颈将集中在生物信息学数据分析这部分（在革命性的新的测序技术摒弃复杂的生物信息学过程之前）。</p>
-<h3 id="3-基因测序技术的演变历程"><a href="#3-基因测序技术的演变历程" class="headerlink" title="3 基因测序技术的演变历程"></a>3 基因测序技术的演变历程</h3><p> 从技术的演变升级来看，基因测序技术主要历经三代：第一代测序技术，主要基于Sanger双脱氧终止法的测序原理，结合荧光标记和毛细管阵列电泳技术来实现测序的自动化，1975年由Sanger和Coulson发明，基本方法是链终止或降解法。人类基因组计划就是基于一代测序技术。第二代测序技术，早期代表平台包括Illumina的Solexa、Life Technologies的Solid、罗氏的454平台等目前市场的主流机型包括Illumina的HiSeq/MiSeq/NextSeq、Life Technologies的Solid/Ion PGM/Ion Proton等。它们的测序原理不完全相同，但共同的特点是都以舍弃读长为代价实现了高通量。第三代测序技术又称为单分子DNA测序，即通过现代光学、高分子、纳米技术等手段来区分碱基信号差异的原理，以达到直接读取序列信息的目的，而不需要使用生物或化学试剂，这对于进一步降低测序成本是非常可取的。</p>
-<h3 id="4-第二代测序技术优势突出"><a href="#4-第二代测序技术优势突出" class="headerlink" title="4 第二代测序技术优势突出"></a>4 第二代测序技术优势突出</h3><p> 一代测序的突出优势是高读长及高准确性，一次读取DNA片段长度可达1000bp，准确性可到到99.99%。然而技术原理的限制下高读长的特点反而增加了测序成本，并且测序的通量大打折扣，这就限制了一代测序的应用范围。与之相比，二代基因测序的核心提升在于牺牲了读长的前提下极大优化了成本和通量。采用大规模平行测序原理，不仅极大的降低了测序成本，同时在保证了准确性的前提下实现了高通量测序。第三代基因测序读长较长，如Pacific Biosciences公司的PACBIO RS II 的平均读长达到 10kb， 可以减少生物信息学中的拼接成本且从作用原理上避免了PCR扩增带来的出错，但是总体上单读长的错误率依然偏高，成为限制其商业应用开展的重要原因，同时其分析软件也不够丰富，在成本和通量上也没有比较优势， 短期内很难对二代测序形成替代。综上所述，在三代基因测序技术突破之前，NGS较现行技术有高通量、高准确性、成本适应当前消费端的优势，所以中短期内，NGS将成为基因测序领域的主力军。<br><img src="http://ofu5ujfti.bkt.clouddn.com/836d0f3e-ddb3-4011-a4f2-18b1cc9ceaaa.png" alt=""><br><img src="http://ofu5ujfti.bkt.clouddn.com/a22d4439-7087-4088-902f-7c0d5e36613f.png" alt=""><br><img src="http://ofu5ujfti.bkt.clouddn.com/9b0c98b7-d43e-443f-a263-485d4fd31f69.png" alt=""></p>
-<h3 id="5-生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃"><a href="#5-生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃" class="headerlink" title="5 生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃"></a>5 生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃</h3><p> 数据解读是整个基因测序行业最具价值的部分，体现了测序公司的研发实力，理论上新产品的开发即是对下游应用领域的拓展，也是抢占创新应用领域制高点的关键。进一步来看，数据解读的准确度和可靠性与样本量息息相关，能否积累足够多的临床样本量，从而拥有强大的疾病/表型的基因组数据库，并通过数据平台的处理、运算和存储形成大数据的积累是临床解读的基础。这里区别于数据解读， 狭义的基于生物信息学的数据分析是将二代测序生成的原始数据通过数据处理和分析得到所需的基因分型（如SNP、CNV）、插入缺失（InDel）或结构变异等，该过程需要拥有专业背景的人员、专业的生物信息学软件以及处理器级别的计算机，其中最重要的生物信息学人才相对匮乏，对新进入企业构成一定门槛。另一方面，目前二代测序的专业分析软件已经接近标准化和流程化，更有上游设备供应商为非专业背景客户提供了诸如基于Windows系统的一键式整合软件。因此，该细分市场虽然增长迅速，但空间不够大，而且面临下一代测序技术可能省却或简化生物信息学环节的风险。<br><img src="http://ofu5ujfti.bkt.clouddn.com/56eaae63-f790-4adb-89b1-efd85dfa4f13.png" alt=""><br><img src="http://ofu5ujfti.bkt.clouddn.com/77d6fbba-652b-4f8c-a66f-64d578c9fc03%20%281%29.png" alt=""></p>
-<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p> 生物信息学作为一门工具学科，其发展依赖于上游的测序技术的发展。生物信息学的定义很广泛，有开发更好更优的软件来处理海量的数据，有使用前者开发的软件进行科研的。但是一旦上游技术发生一小步的发展，下游就要重新洗牌跟上。例如开发软件的科学家们费劲力气优化再优化他们的软件以减少误差，一个三代测序技术的发展，原先的软件都不在需要了。因此，在学的过程中，重要的不是技术、软件应用本身而是相应的学习能力和合适的学习方法。</p>
+		<p><a href="http://boyun.sh.cn/bio/?p=1901" target="_blank" rel="external">Fastq格式详解</a></p>
+<p>请将input.fastq文件根据序列的一致性进行去冗余合并。合并完后的输出文件格式如下：</p>
+<pre><code>@1_5531992
+TACCTGGTTGATCCTGCCAGTAG
++
+dcdddccdddcddddcddcdcbc
+@2_33067
+ACCTGGTTGATCCTGCCAGTAGG
++
+dddddbbdcbbccb`cbbbbbaa
+</code></pre><p>其中@行中的1代表索引，5531992代表TACCTGGTTGATCCTGCCAGTAG序列在input.fastq中存在的次数。dcdddccdddcddddcddcdcbc上的每个碱基分别是5531992条序列每一位碱基上的质量值的平均数。</p>
+<p>说明，此版本的数据是Illumina 1.8版本以后的测序数据。所以质量值需要减去33。</p>
+<p>具体输出文件格式请见output.fastq。</p>
+<p>注：output.fastq此文件只为输出格式参考。此文件里的统计结果和input.fastq文件无直接关系。</p>
+<p>perl代码：</p>
+<pre><code>#!/usr/bin/perl -w
+use strict;
+open IN, &quot;&lt;D:/lc_test/test2/input.fastq&quot; or die &quot;Cannot open!&quot;;
+open OUT, &quot;&gt;D:/lc_test/test2/output.fastq&quot; or die &quot; Cannot create!&quot;;
+my (@seq,%qual,%count,%index);
+my $i = 1;
+$/ = &quot;@&quot;;        #设置@为换行符
+readline(IN);
+while(&lt;IN&gt;){
+    my @temp = split/\n/,$_;        #分解，[1]是序列，[3]是质量值
+    chomp for @temp;
+        my @qualTemp = map(ord,split(//, $temp[3]));  #分解质量值并转换成数值
+        if( grep /$temp[1]/, @seq){
+        my @old = split/_/, $qual{$temp[1]}; # 旧的序列的质量值
+        @qualTemp = map( $old[$_] + $qualTemp[$_],0..$#old);
+        $count{$temp[1]} += 1;
+        }
+    else{
+        push @seq,$temp[1];
+        $index{$temp[1]} = $i;
+        $count{$temp[1]} = 1;
+        }
+    $qual{$temp[1]} = join(&quot;_&quot;,@qualTemp);
+    $i += 1;#last if $i&gt;200;
+}
+for my $seq(@seq){
+    print OUT &quot;@&quot;.$index{$seq}.&quot;_&quot;.$count{$seq}.&quot;\n&quot;;
+    print OUT $seq.&quot;\n&quot;;
+    print OUT &quot;+\n&quot;;
+    print OUT map( chr(int($_/$count{$seq})), split(/_/,    $qual{$seq}));
+    print OUT &quot;\n&quot;;
+}
+close IN;
+close OUT;
+</code></pre><p><a href="http://pan.baidu.com/s/1cMU5ci" target="_blank" rel="external">相关文件下载</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -128,14 +189,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/生物信息学/">生物信息学</a>
+  <a class="article-category-link" href="/categories/perl/">perl</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/基因测序/">基因测序</a>
-  </div>
 
 </div>
 
@@ -143,7 +199,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://xieweijia.com/2016/11/27/测序/" data-title="基因测序 | 生物信息菜鸟 | 维佳" data-tsina="6055145068" class="share clearfix">
+	  <div data-url="http://xieweijia.com/2017/04/12/Perl实战2/" data-title="Perl实战2 | 生物信息菜鸟 | 维佳" data-tsina="6055145068" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -156,19 +212,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/28/目标，目标/" title="目标，目标">
-  <strong>上一篇：</strong><br/>
-  <span>
-  目标，目标</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/27/perl实战/"  title="Perl实战">
+<a href="/2016/11/28/目标，目标/"  title="目标，目标">
  <strong>下一篇：</strong><br/> 
- <span>Perl实战
+ <span>目标，目标
 </span>
 </a>
 </div>
@@ -177,7 +225,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/11/27/测序/" data-title="基因测序" data-url="http://xieweijia.com/2016/11/27/测序/"></div>
+	<div class="ds-thread" data-thread-key="2017/04/12/Perl实战2/" data-title="Perl实战2" data-url="http://xieweijia.com/2017/04/12/Perl实战2/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -201,7 +249,7 @@ var duoshuoQuery = {short_name:"xieweijia"};
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-测序成本偏离摩尔定律超速下降"><span class="toc-number">1.</span> <span class="toc-text">1 测序成本偏离摩尔定律超速下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据分析将会是未来的成本约束"><span class="toc-number">2.</span> <span class="toc-text">2 数据分析将会是未来的成本约束</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-基因测序技术的演变历程"><span class="toc-number">3.</span> <span class="toc-text">3 基因测序技术的演变历程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-第二代测序技术优势突出"><span class="toc-number">4.</span> <span class="toc-text">4 第二代测序技术优势突出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃"><span class="toc-number">5.</span> <span class="toc-text">5 生物信息学分析是测序服务的门槛，细分市场增长迅速相对活跃</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#写在最后"><span class="toc-number">6.</span> <span class="toc-text">写在最后</span></a></li></ol>
+ 
  
   </div>
 
