@@ -4,23 +4,47 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>miRNA靶点数据库 | 生物信息菜鸟 | 维佳</title>
+    <title>两个R画图题 | 生物信息菜鸟 | 维佳</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="WeiJia">
     
 
     
-    <meta name="description" content="starBase：一个高通量实验数据CLIP-Seq和mRNA降解组测序数据支持的microRNA靶标数据库,包含了miRNA-mRNA，miRNA-lncRNA，miRNA-circRNA，miRNA-ceRNA 和RNA-protein等的调控关系。整合和构建多个流行的靶标预测软件的交集和调控关系。构建了最全面的包含了14种癌症类型（&amp;gt;6000个样本）Pan-Cancer（泛癌）表达图">
+    <meta name="description" content="1.请根据depth_cover_barplot.txt文件里的内容作图，图片内容请见depth_cover_barplot.pdf
+说明：
+(1) 文本文件第一行是指染色体，第一列是样本名。
+(2) pdf文件横坐标是指染色体，左边纵坐标是该染色体的平均覆盖深度。
+R代码：
+rm(list = ls())
+setwd(&amp;quot;D:\\test\\test4&amp;quot;)
+aaa&amp;lt;- r">
 <meta property="og:type" content="article">
-<meta property="og:title" content="miRNA靶点数据库">
-<meta property="og:url" content="http://xieweijia.com/2016/10/31/miRNA靶点数据库/index.html">
+<meta property="og:title" content="两个R画图题">
+<meta property="og:url" content="http://xieweijia.com/2017/04/12/两个R画图题/index.html">
 <meta property="og:site_name" content="生物信息菜鸟 | 维佳">
-<meta property="og:description" content="starBase：一个高通量实验数据CLIP-Seq和mRNA降解组测序数据支持的microRNA靶标数据库,包含了miRNA-mRNA，miRNA-lncRNA，miRNA-circRNA，miRNA-ceRNA 和RNA-protein等的调控关系。整合和构建多个流行的靶标预测软件的交集和调控关系。构建了最全面的包含了14种癌症类型（&amp;gt;6000个样本）Pan-Cancer（泛癌）表达图">
-<meta property="og:updated_time" content="2016-10-31T11:10:07.922Z">
+<meta property="og:description" content="1.请根据depth_cover_barplot.txt文件里的内容作图，图片内容请见depth_cover_barplot.pdf
+说明：
+(1) 文本文件第一行是指染色体，第一列是样本名。
+(2) pdf文件横坐标是指染色体，左边纵坐标是该染色体的平均覆盖深度。
+R代码：
+rm(list = ls())
+setwd(&amp;quot;D:\\test\\test4&amp;quot;)
+aaa&amp;lt;- r">
+<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/depth_cover_barplot.png">
+<meta property="og:image" content="http://ofu5ujfti.bkt.clouddn.com/base_stat_total.png">
+<meta property="og:updated_time" content="2017-04-12T13:52:45.765Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="miRNA靶点数据库">
-<meta name="twitter:description" content="starBase：一个高通量实验数据CLIP-Seq和mRNA降解组测序数据支持的microRNA靶标数据库,包含了miRNA-mRNA，miRNA-lncRNA，miRNA-circRNA，miRNA-ceRNA 和RNA-protein等的调控关系。整合和构建多个流行的靶标预测软件的交集和调控关系。构建了最全面的包含了14种癌症类型（&amp;gt;6000个样本）Pan-Cancer（泛癌）表达图">
+<meta name="twitter:title" content="两个R画图题">
+<meta name="twitter:description" content="1.请根据depth_cover_barplot.txt文件里的内容作图，图片内容请见depth_cover_barplot.pdf
+说明：
+(1) 文本文件第一行是指染色体，第一列是样本名。
+(2) pdf文件横坐标是指染色体，左边纵坐标是该染色体的平均覆盖深度。
+R代码：
+rm(list = ls())
+setwd(&amp;quot;D:\\test\\test4&amp;quot;)
+aaa&amp;lt;- r">
+<meta name="twitter:image" content="http://ofu5ujfti.bkt.clouddn.com/depth_cover_barplot.png">
 
     
     <link rel="alternative" href="/atom.xml" title="生物信息菜鸟 | 维佳" type="application/atom+xml">
@@ -82,14 +106,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/31/miRNA靶点数据库/" title="miRNA靶点数据库" itemprop="url">miRNA靶点数据库</a>
+      <a href="/2017/04/12/两个R画图题/" title="两个R画图题" itemprop="url">两个R画图题</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="WeiJia" target="_blank" itemprop="author">WeiJia</a>
 		
   <p class="article-time">
-    <time datetime="2016-10-31T09:24:00.000Z" itemprop="datePublished"> 发表于 2016-10-31</time>
+    <time datetime="2017-04-12T13:50:02.698Z" itemprop="datePublished"> 发表于 2017-04-12</time>
     
   </p>
 </header>
@@ -98,24 +122,67 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1"><span class="toc-number">1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-number">2.</span> <span class="toc-text">2.</span></a></li></ol>
 		
 		</div>
 		
-		<ol>
-<li><a href="http://starbase.sysu.edu.cn/" target="_blank" rel="external">starBase</a>：一个高通量实验数据CLIP-Seq和mRNA降解组测序数据支持的microRNA靶标数据库,包含了miRNA-mRNA，miRNA-lncRNA，miRNA-circRNA，miRNA-ceRNA 和RNA-protein等的调控关系。整合和构建多个流行的靶标预测软件的交集和调控关系。构建了最全面的包含了14种癌症类型（&gt;6000个样本）Pan-Cancer（泛癌）表达图谱和互作网络。中山大学做的数据库。</li>
-<li><a href="http://mirbase.org/index.shtml" target="_blank" rel="external">miRBase</a>：序列数据库是一个提供包括miRNA序列数据、注释、预测基因靶标等信息的全方位数据库，是存储miRNA信息最主要的公共数据库之一。</li>
-<li><a href="http://mirlab.sysu.edu.cn/starscan/" target="_blank" rel="external">starScan</a>：基于降解组测序（degradome sequencing）数据预测动植物的各类小RNA(miRNA，piRNA和内源的siRNA)靶向的lncRNA，circRNA，pseudogene和mRNA的软件服务平台。目前已经整合了20个动物和植物的物种的降解组测序数据。</li>
-<li><a href="http://rna.sysu.edu.cn/chipbase/index.php" target="_blank" rel="external">ChIPBase</a>：整合CLIP-Seq和ChIP-Seq的数据探讨microRNA的转录和转录后调控，构建转录因子-&gt;microRNA-&gt;靶标的调控网络。</li>
-<li><a href="http://diana.imis.athena-innovation.gr/DianaTools/index.php?r=tarbase/index/" target="_blank" rel="external">TarBase</a>：Tarbase：一个收集已被实验验证的microRNA靶标数据库。</li>
-<li><a href="http://c1.accurascience.com/miRecords/" target="_blank" rel="external">miRecords</a>：一个整合的microRNA靶标数据库。整合多个靶标预测软件的调控关系。</li>
-<li><a href="http://www.targetscan.org/vert_71/" target="_blank" rel="external">targetScan</a>：基于靶mRNA序列的进化保守等特征搜寻动物的microRNA靶基因。是预测microRNA靶标假阳性率较低的软件。而且是microRNA领域大牛Bartel实验室开发的。</li>
-<li><a href="http://www.microrna.org/microrna/home.do" target="_blank" rel="external">miRanda</a>：是著名的Memorial Sloan-Kettering 癌症研究中心的研究人员开发的软件和数据库。miRanda的最新版本又叫mirSVR。</li>
-<li><a href="https://genie.weizmann.ac.il/pubs/mir07/mir07_data.html" target="_blank" rel="external">PITA</a>：基于靶位点的可接性（target-site accessibility）和自由能预测microRNA的靶标。是著名的生物信息学家Segal实验室开发的。</li>
-<li><a href="http://mirtarbase.mbc.nctu.edu.tw/" target="_blank" rel="external">miRTarBase</a>：整合实验验证的microRNA靶标的数据库。这是台湾做的数据库，有个坑啊，直接百度miRTarBase可能会出现别的网站。</li>
-<li><a href="http://carolina.imis.athena-innovation.gr/diana_tools/web/index.php?r=lncbasev2%2Findex" target="_blank" rel="external">DIANA-LncBase</a>: 提供基于2个研究的CLIP-Seq数据miRNA调控长非编码RNA(lncRNA)的信息。和TarBase是一个实验室开发的。</li>
-<li><a href="http://gyanxet-beta.com/lncedb/" target="_blank" rel="external">lnCeDB</a>：提供lncRNA-miRNA调控关系。好像被强了，下个lantern吧。</li>
+		<h2 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h2><p>请根据depth_cover_barplot.txt文件里的内容作图，图片内容请见depth_cover_barplot.pdf</p>
+<p>说明：</p>
+<p>(1) 文本文件第一行是指染色体，第一列是样本名。</p>
+<p>(2) pdf文件横坐标是指染色体，左边纵坐标是该染色体的平均覆盖深度。</p>
+<p><img src="http://ofu5ujfti.bkt.clouddn.com/depth_cover_barplot.png" alt=""><br>R代码：</p>
+<pre><code>rm(list = ls())
+setwd(&quot;D:\\test\\test4&quot;)
+aaa&lt;- read.table(&quot;depth_cover_barplot.txt&quot;)
+pdf(&quot;plot.pdf&quot;,height = 6,width = 13)
+par(mgp=c(1.6,0.6,0),mar=c(3,3,3,1))
+barplot(as.matrix(aaa),
+        ylim = c(0,400),
+        ylab = &quot;Mean Depth&quot;,
+        main = &quot;Depth of Coverage&quot;,
+        col = rainbow(3),
+        beside = TRUE,
+        font = 2, cex.lab = 1.4,
+        border = NA
+        )
+legend(&quot;topright&quot;,
+       legend = c(&quot;S1&quot;,&quot;S2&quot;,&quot;S3&quot;),
+       pch = 15,
+       col = rainbow(3),
+       bty = &quot;n&quot;)
+dev.off()
+</code></pre><p><a href="http://pan.baidu.com/s/1slJcnSx" target="_blank" rel="external">相关文件下载</a></p>
+<h2 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h2><p>说明：</p>
+<ol>
+<li><p>请读取base_stat_total.txt文件里的内容，生成NucleotideBias.jpg图片内容，可以生成jpg或者pdf格式文件。</p>
+</li>
+<li><p>文本文件第一行代表A,C,G,U四个碱基，其他行代表每个碱基在第18-25个位置上各个碱基所占的比例。<br><img src="http://ofu5ujfti.bkt.clouddn.com/base_stat_total.png" alt=""></p>
+</li>
 </ol>
+<p>R代码：</p>
+<pre><code>rm(list = ls())
+setwd(&quot;D:\\test\\test5&quot;)
+aaa&lt;- read.table(&quot;base_stat_total.txt&quot;,header = TRUE)
+row.names(aaa)&lt;-c(18:25)
+pdf(&quot;plot.pdf&quot;,height = 6,width = 8)
+par(mgp=c(1.6,0.6,0),mar=c(3,3,5,5),xpd=T)
+barplot(t(as.matrix(aaa)),
+        ylim = c(0,100),
+        ylab = &quot;Percent(100%)&quot;,
+        xlab = &quot;Lenth&quot;,
+        main = &quot;total miRNA first nucleotide bias&quot;,
+        col = rainbow(4),
+        font = 1, cex.lab = 1,
+        #border = NA
+        )
+legend(&quot;topright&quot;,
+       legend = c(&quot;A&quot;,&quot;C&quot;,&quot;G&quot;,&quot;U&quot;),
+       pch = 15,
+       col = rainbow(4),
+       inset = c(-0.05,0)
+       )
+dev.off()
+</code></pre><p><a href="http://pan.baidu.com/s/1o8x3AMA" target="_blank" rel="external">相关文件下载</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -123,14 +190,9 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/生物信息学/">生物信息学</a>
+  <a class="article-category-link" href="/categories/R语言/">R语言</a>
 </div>
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/ceRNA/">ceRNA</a>
-  </div>
 
 </div>
 
@@ -138,7 +200,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://xieweijia.com/2016/10/31/miRNA靶点数据库/" data-title="miRNA靶点数据库 | 生物信息菜鸟 | 维佳" data-tsina="6055145068" class="share clearfix">
+	  <div data-url="http://xieweijia.com/2017/04/12/两个R画图题/" data-title="两个R画图题 | 生物信息菜鸟 | 维佳" data-tsina="6055145068" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -151,19 +213,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/03/四六级/" title="英语四六级考试">
-  <strong>上一篇：</strong><br/>
-  <span>
-  英语四六级考试</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/31/R语言综述/"  title="R语言综述">
+<a href="/2017/04/12/Perl实战2/"  title="Perl实战2">
  <strong>下一篇：</strong><br/> 
- <span>R语言综述
+ <span>Perl实战2
 </span>
 </a>
 </div>
@@ -172,7 +226,7 @@
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2016/10/31/miRNA靶点数据库/" data-title="miRNA靶点数据库" data-url="http://xieweijia.com/2016/10/31/miRNA靶点数据库/"></div>
+	<div class="ds-thread" data-thread-key="2017/04/12/两个R画图题/" data-title="两个R画图题" data-url="http://xieweijia.com/2017/04/12/两个R画图题/"></div>
 <!-- 多说评论框 end -->
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
@@ -196,7 +250,7 @@ var duoshuoQuery = {short_name:"xieweijia"};
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1"><span class="toc-number">1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2"><span class="toc-number">2.</span> <span class="toc-text">2.</span></a></li></ol>
  
   </div>
 
